@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Draft Message</title>
+    <script>
+        function generateMessage() {
+            const email = document.getElementById("emailId").value;
+            const [namePart, domainPart] = email.split("@");
+            const name = namePart.replace(/\./g, " ").replace(/\b\w/g, char => char.toUpperCase());
+            const companyName = domainPart.split(".")[0].replace(/\b\w/g, char => char.toUpperCase());
+
+            const subjectTemplate = `Inquiry From Adharth || ${name} & ${companyName}`;
+            const contentTemplate = `Hi ${name},\n\n` +
+                `I hope this message finds you well. I'm Gautam, and I came across your profile through a mutual connection in Information Technology. ` +
+                `${companyName} seems well-positioned for growth, especially in regions like India and other markets. I’d love to explore how we might collaborate.\n\n` +
+                `I lead Adharth Group, a leading RevOps firm. We’re focused on building strategic partnerships that align with our partners' goals.\n\n` +
+                `In the Information Technology Industry, demand generation often involves building trust, targeting niche audiences to generate qualified leads, and standing out in a red ocean. ` +
+                `We’ve worked with companies to navigate these challenges effectively using account-based marketing with zero budget.\n\n` +
+                `I had a chance to look through ${companyName} website, and I believe there could be great synergy between our approaches. ` +
+                `If you’re available for a quick 10-minute chat this week or next, let’s connect.\n\n` +
+                `Looking forward to your thoughts.`;
+
+            document.getElementById("subject").textContent = subjectTemplate;
+            document.getElementById("content").textContent = contentTemplate;
+        }
+
+        function copyContent(targetId) {
+            const content = document.getElementById(targetId).textContent;
+            navigator.clipboard.writeText(content)
+                .then(() => alert("Content copied to clipboard!"))
+                .catch(err => alert("Failed to copy content: " + err));
+        }
+    </script>
+</head>
+<body>
+    <h1>Dynamic Draft Message Generator</h1>
+    <label for="emailId">Enter Recipient's Email ID:</label>
+    <input type="email" id="emailId" placeholder="name@companyname.com">
+    <br><br>
+
+    <button onclick="generateMessage()">Generate Message</button>
+
+    <h2>Generated Details:</h2>
+    <p><strong>Subject:</strong> <span id="subject"></span> <button onclick="copyContent('subject')">Copy Subject</button></p>
+    <p><strong>Content:</strong></p>
+    <pre id="content" style="white-space: pre-wrap;"></pre>
+    <button onclick="copyContent('content')">Copy Content</button>
+</body>
+</html>
+
+
